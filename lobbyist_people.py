@@ -11,7 +11,7 @@ def main():
     location_counts = data.groupby(["STATE"]).size().reset_index(name="COUNT")
     top_locations = location_counts.sort_values(by="COUNT", ascending=False).head(10)
     st.title("Top 10 Most Common Locations in Lobbyist Data")
-    st.bar_chart(top_locations.set_index("CITY")["COUNT"])
+    st.bar_chart(top_locations.set_index("STATE")["COUNT"])
 
 if __name__  == '__main__':
     main()
