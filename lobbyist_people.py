@@ -1,18 +1,26 @@
 import streamlit as st
 import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
 
 @st.cache_data
 def load_data():
-    return pd.read_csv('./datasets/LD_Lobbyists.csv')
+    return pd.read_csv('./datasets/Lobbyist_Data_-_Lobbyists_20250121.csv')
 
 def main():
     data = load_data()
     st.sidebar.header("Filters")
-    location_counts = data.groupby(["STATE"]).size().reset_index(name="COUNT")
-    top_locations = location_counts.sort_values(by="COUNT", ascending=False).head(10)
-    top_locations = top_locations.sort_values(by="COUNT", ascending=True)
-    st.title("Top 10 Most Common Locations in Lobbyist Data")
-    st.bar_chart(top_locations.set_index("STATE")["COUNT"])
+    state_counts = data["STATE"].value_counts().reset_index()
+    state_counts.columns = ["State", "Count"]
+    top_states = state_counts.head(10)
+    sns.set_style("whitegrid")
+    fig, ax = plt.subplots(figsize=(10, 6))
+    sns.barplot(y=top_states["State"], x=top_states["Count"], palette="Blues_r", ax=ax)
+    ax.set_xlabel("Count")
+    ax.set_ylabel("State")
+    ax.set_title("Top 10 Most Common States in Lobbyist Data")
+    st.title("Top 10 Most Common States in Lobbyist Data")
+    st.pyplot(fig)
 
 if __name__  == '__main__':
     main()
