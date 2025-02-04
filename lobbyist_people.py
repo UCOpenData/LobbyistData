@@ -21,6 +21,17 @@ def main():
     ax.set_title("Top 10 Most Common States in Lobbyist Data")
     st.title("Top 10 Most Common States in Lobbyist Data")
     st.pyplot(fig)
+    company_counts = data["EMPLOYER_NAME"].value_counts().reset_index()
+    company_counts.columns = ["Employer", "Count"]
+    top_companies = company_counts.head(20)
+    fig_1, ax_1 = plt.subplots(figsize=(5, 6))
+    sns.barplot(y=top_companies["Employer"], x=top_companies["Count"], palette="Blues_r", ax=ax_1)
+    ax_1.set_xlabel("Count")
+    ax_1.set_ylabel("Employer")
+    ax_1.set_title("Top 10 Most Common Employers in Lobbyist Data")
+    st.title("Top 10 Most Common Employers in Lobbyist Data")
+    st.pyplot(fig_1)
+
 
 if __name__  == '__main__':
     main()
