@@ -3,6 +3,9 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 from datetime import datetime, timedelta
+from sidebar import init_sidebar
+
+init_sidebar()
 
 @st.cache_data
 def load_lobbyists_data():
